@@ -145,8 +145,15 @@ def merge(vs):
                 t["AF"] = [sum([vsi["AF"][j] for vsi in vv_samples])/len_vv for j in range(len(alt))]
             else:
                 t["AF"] = sum([vsi["AF"] for vsi in vv_samples])/len_vv
-            ads = [(vi["AD"][0], vi["RD"]) for vi in vv_samples]
-            t["AD"] = (int(sum([vi["AD"][0] for vi in vv_samples])/len_vv), int(sum([vi["RD"] for vi in vv_samples])/len_vv))
+            # Check if input VCF was created by VarScan in non-standard format
+            # Run as original merge_mnp.py as AD[0], AD[1] if False; otherwise, run as VarScan with AD/RD format
+            varscan = True if any("varscan" in s.lower() for s in vcf.headers) else False
+            if varscan:
+                ads = [(vi["AD"][0], vi["RD"]) for vi in vv_samples]
+                t["AD"] = (int(sum([vi["AD"][0] for vi in vv_samples])/len_vv), int(sum([vi["RD"] for vi in vv_samples])/len_vv))
+            else:
+                ads = [(vi["AD"][0], vi["AD"][1]) for vi in vv_samples]
+                t["AD"] = (int(sum([vi["AD"][0] for vi in vv_samples])/len_vv), int(sum([vi["AD"][1] for vi in vv_samples])/len_vv))
             afdp = [vi.get("AFDP") for vi in vv_samples]
             if None not in afdp:
                 t["AFDP"] = int(sum(afdp)/len_vv)
