@@ -12,7 +12,7 @@ process PHASE_VCF {
     path(fasta_fai)
 
     output:
-    tuple val(sample_id), path("*.phased.vcf.gz"), path("*.phased.vcf.gz.tbi"), emit: results
+    tuple val(sample_id), path("${sample_id}.phased.vcf.gz"), path("${sample_id}.phased.vcf.gz.tbi"), emit: results
 
     script:
     """
