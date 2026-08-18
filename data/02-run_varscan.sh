@@ -9,6 +9,7 @@ TUMOR_BAM="data/WES_EA_T_1.bwa.dedup.bam"
 SAMPLE=$(basename ${NORMAL_BAM} _N_1.bwa.dedup.bam)
 NORMAL_PILEUP="data/varscan2/${SAMPLE}.normal.pileup"
 TUMOR_PILEUP="data/varscan2/${SAMPLE}.tumor.pileup"
+SNP="data/varscan2/${SAMPLE}.snp.vcf"
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 set -euo pipefail
@@ -27,9 +28,12 @@ docker run --rm --user $(id -u):$(id -g) -v ..:/data -w /data ${DOCKER} \
 		wait $tumor_pid
 
 		# Run VarScan2 and output as VCF
-		java -jar /opt/varscan/VarScan.jar somatic \
+		java -Xmx8G -jar /opt/varscan/VarScan.jar somatic \
 			'"${NORMAL_PILEUP}"' \ 
 			'"${TUMOR_PILEUP}"' \
 			data/varscan2/'"${SAMPLE}"' \
 			--output-vcf
+		
+		# Split variants into somatic and germline files
+		java -Xmx8G -jar /opt/varscan/Varscan.jar processSomatic '"${SNP}"'  
 	'
