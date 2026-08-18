@@ -1,16 +1,49 @@
-# Ignore large data files
-data/*
+# Ignore all
+*
+
+# Ignore large data files but keep small example VCFs
+!data/
 !data/README.md
 !data/*.sh
 !data/varscan2
-data/varscan2/*
+!data/varscan2/
 !data/varscan2/README.md
+!data/varscan2/WES_EA.snp.Somatic.hc.vcf.gz
+!data/varscan2/WES_EA.snp.Somatic.hc.vcf.gz.tbi
 !data/varscan2/optional-snp_quickcheck.sh
+!data/phased/
+!data/phased/WES_EA.snp.Somatic.hc.phased.vcf.gz*
+!data/merged/
+!data/merged/WES_EA.merged.vcf.gz
+!data/merged/WES_EA.merged.vcf.gz.tbi
 
 # Ignore large reference files
-ref/*
+!ref/
 !ref/README.md
 !ref/01-reference_download.sh
-# pixi environments
+
+# Pixi environments and Docker
 .pixi/*
 !.pixi/config.toml
+!pixi.lock
+!pixi.toml
+!.dockerignore
+!Dockerfile
+
+# Sentieon scripts
+!scripts/
+!scripts/*
+
+# Nextflow
+!nextflow.config
+!main.nf
+!modules/
+!modules/*
+!templates/
+!templates/*
+
+# Other
+!README.md
+!assets/
+!assets/neighboring_snps.png
+!assets/mnp_merge_nf.drawio.svg
