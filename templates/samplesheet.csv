@@ -1,0 +1,2 @@
+sample_id,normal_bam,normal_bai,tumor_bam,tumor_bai,vcf
+WES_EA,data/WES_EA_N_1.bwa.dedup.bam,data/WES_EA_N_1.bwa.dedup.bai,data/WES_EA_T_1.bwa.dedup.bam,data/WES_EA_T_1.bwa.dedup.bai,data/varscan2/WES_EA.snp.Somatic.hc.vcf.gz

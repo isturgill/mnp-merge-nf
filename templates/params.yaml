@@ -1,0 +1,4 @@
+reference_fasta: "ref/GRCh38.d1.vd1.fa"
+reference_fasta_fai: "ref/GRCh38.d1.vd1.fa.fai"
+codons: "ref/codons.txt"
+outdir: "data/merged"
