@@ -1,7 +1,12 @@
 # Ignore large data files
 data/*
 !data/README.md
+!data/*.sh
+/data/varscan2/*
+!data/varscan2/README.md
+!data/varscan2/optional-snp_quickcheck.sh
 
 # Ignore large reference files
 ref/*
 !ref/README.md
+!ref/01-reference_download.sh
