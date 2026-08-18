@@ -33,7 +33,7 @@ The following merge scripts are redistributed in an unaltered form:
 * [merge_mnp.py](https://github.com/Sentieon/sentieon-scripts/blob/master/merge_mnp/merge_mnp.py)
 
 ## New, small addition
-An additional script, merge_mnp_varscan.py has been slightly modified here for use in parsing VarScan2 VCF files, which have a non-standard format.
+An additional script, `merge_mnp_varscan.py`, has been slightly modified here for use in parsing VarScan2 VCF files, which have a non-standard format.
 
 Namely, standard format VCFs provide AD as two values for reference depth and alternate depth. VarScan2 provides these separately as RD and AD.
 
