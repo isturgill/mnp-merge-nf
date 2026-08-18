@@ -2,14 +2,21 @@
 # This script first runs samtools mpileup individually on normal and tumor BAMs.
 # The mpileups are then used with VarScan2 for somatic variant calling. 
 # Note: FASTA and BAM files should have associated index files in the same directory
+#
+# -------------------- Set Docker image/version and file paths ---------------------
 DOCKER="mgibio/varscan-cwl:v2.4.2-samtools1.16.1"
 REF_FASTA="ref/GRCh38.d1.vd1.fa"
 NORMAL_BAM="data/WES_EA_N_1.bwa.dedup.bam"
 TUMOR_BAM="data/WES_EA_T_1.bwa.dedup.bam"
-SAMPLE=$(basename ${NORMAL_BAM} _N_1.bwa.dedup.bam)
+# ----------------------------------------------------------------------------------
+# Automated naming based on above inputs
+NORMAL=$(basename ${NORMAL_BAM} .bwa.dedeup.bam)
+TUMOR=$(basename ${TUMOR_BAM} .bwa.dedup.bam)
+SAMPLE=$(basename ${NORMAL} _N_1)
 NORMAL_PILEUP="data/varscan2/${SAMPLE}.normal.pileup"
 TUMOR_PILEUP="data/varscan2/${SAMPLE}.tumor.pileup"
 SNP="data/varscan2/${SAMPLE}.snp.vcf"
+#-----------------------------------------------------------------------------------
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 set -euo pipefail
@@ -37,3 +44,9 @@ docker run --rm --user $(id -u):$(id -g) -v ..:/data -w /data ${DOCKER} \
 		# Split variants into somatic and germline files
 		java -Xmx8G -jar /opt/varscan/Varscan.jar processSomatic '"${SNP}"'  
 	'
+
+# This process renames the original samples as simply 'NORMAL' and 'TUMOR'.
+# This is undesirable for the next step with phasing, which cross-references
+# the VCF column names and the @RG read sample names in the BAM, so we need to reset the names.
+sed -i "s/NORMAL/${NORMAL}/g" ${SNP}
+sed -i "s/TUMOR/${TUMOR}/g" ${SNP}
