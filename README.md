@@ -58,4 +58,4 @@ pixi run nextflow run main.nf -profile docker -params-file templates/params.yaml
 Scripts and instructions for how to download and work with example data from the [SEQC2 Consortium](https://sites.google.com/view/seqc2) have been included in [data/README.md](data/README.md). Briefly:
 * Download the reference genome data ([instructions](ref/README.md), [script ref/01-reference_download.sh](ref/01-reference_download.sh))
 * Download the sample BAMS ([instructions](data/README.md), [script data/01-data_download.sh](data/01-data_download.sh)) 
-* Run VarScan2 ([script data/02-run_varscan.sh](data/02-run_varscan.sh))
+* Run VarScan2 ([instructions](data/README.md), [script data/02-run_varscan.sh](data/02-run_varscan.sh))
