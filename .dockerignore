@@ -1,0 +1,11 @@
+# Ignore all
+**
+
+!scripts/
+
+# Keep pixi, and script files
+!pixi.toml
+!pixi.lock
+!scripts/**
+!Dockerfile
+!.dockerignore
