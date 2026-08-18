@@ -1,0 +1,7 @@
+# Ignore large data files
+data/*
+!data/README.md
+
+# Ignore large reference files
+ref/*
+!ref/README.md
