@@ -15,7 +15,8 @@ process MERGE_MNP {
 
     output:
     // 
-    path("${sample_id}.merged.vcf"), emit: results
+    path("${sample_id}.merged.vcf.gz"), emit: results_gz
+    path("${sample_id}.merged.vcf.gz.tbi"), emit: results_gz_tbi
 
     script:
     """
@@ -25,5 +26,8 @@ process MERGE_MNP {
         merge_by_codon \
         ${codons} \
         --out_file ${sample_id}.merged.vcf
+
+    pixi run bgzip ${sample_id}.merged.vcf
+    pixi run tabix -p vcf ${sample_id}.merged.vcf.gz
     """
 }
