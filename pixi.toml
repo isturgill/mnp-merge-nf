@@ -1,14 +1,16 @@
 [workspace]
 authors = ["Ian <https://www.github.com/isturgill>"]
-channels = ["conda-forge"]
+channels = ["conda-forge", "bioconda"]
 name = "mnp-merge-nf"
-platforms = ["osx-arm64", "osx-64", "win-64", "linux-64"]
+platforms = ["linux-64", "osx-64", "osx-arm64"]
 version = "0.1.0"
 
 [tasks]
 
 [dependencies]
 python = "3.14.*"
+openjdk = ">=25.0.2,<26"
+nextflow = ">=26.4.6,<27"
 
 [pypi-dependencies]
 vcflib = ">=1.0.1, <2"
