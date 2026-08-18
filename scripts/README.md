@@ -36,10 +36,11 @@ The following merge scripts are redistributed in an unaltered form:
 An additional script, merge_mnp_varscan.py has been slightly modified here for use in parsing VarScan2 VCF files, which have a non-standard format.
 
 Namely, standard format VCFs provide AD as two values for reference depth and alternate depth. VarScan2 provides these separately as RD and AD.
+
 Simple diff:
 143,144c148,149
-> <             ads = [(vi["AD"][0], vi["AD"][1]) for vi in vv_samples]
-> <             t["AD"] = (int(sum([vi["AD"][0] for vi in vv_samples])/len_vv), int(sum([vi["AD"][1] for vi in vv_samples])/len_vv))
+> \<             ads = [(vi["AD"][0], vi["AD"][1]) for vi in vv_samples]
+> \<             t["AD"] = (int(sum([vi["AD"][0] for vi in vv_samples])/len_vv), int(sum([vi["AD"][1] for vi in vv_samples])/len_vv))
 > ---
 > \>            ads = [(vi["AD"][0], vi["RD"]) for vi in vv_samples]
 > \>            t["AD"] = (int(sum([vi["AD"][0] for vi in vv_samples])/len_vv), int(sum([vi["RD"] for vi in vv_samples])/len_vv))
