@@ -17,11 +17,11 @@ WES_EA.tumor.mpileup
 ```
 
 The `.mpileup` files are intermediate files from samtools and may be discarded unless necessary for troubleshooting or other downstream purposes. The rest break down all of the called variants on the following basis:
-    * Indels
-        - We only further processed the SNPs because this is pipeline is oriented toward SNP merging, so there is only one indel file
-    * SNPs
-        - Germline vs. Somatic vs. LOH called variants
-            - All vs. high-confidence (hc) variants
+* Indels
+    - We only further processed the SNPs because this is pipeline is oriented toward SNP merging, so there is only one indel file
+* SNPs
+    - Germline vs. Somatic vs. LOH called variants
+        - All vs. high-confidence (hc) variants
 
 ## How many SNPs might we expect to merge?
 To answer this question, we might want to look at how many SNPs are both:
