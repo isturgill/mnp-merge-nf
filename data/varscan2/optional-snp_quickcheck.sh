@@ -2,7 +2,7 @@
 # Runs a quick check of potential SNPs that should be merged.
 # Requires DuckDB installation.
 
-VCF="WES_EA.snp.vcf"
+VCF="WES_EA.snp.Somatic.hc.vcf.gz"
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 set -euo pipefail
