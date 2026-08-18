@@ -39,6 +39,7 @@ process PHASE_VCF {
 
     else
         mv \${vcf_gz} ${sample_id}.phased.vcf.gz
+    fi
 
     # Generate the tabix index file for the new phased VCF
     tabix -p vcf ${sample_id}.phased.vcf.gz
