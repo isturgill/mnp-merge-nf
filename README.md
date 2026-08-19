@@ -44,15 +44,25 @@ sample_id,normal_bam,normal_bai,tumor_bam,tumor_bai,vcf
 WES_EA,data/WES_EA_N_1.bwa.dedup.bam,data/WES_EA_N_1.bwa.dedup.bai,data/WES_EA_T_1.bwa.dedup.bam,data/WES_EA_T_1.bwa.dedup.bai,data/varscan2/WES_EA.snp.Somatic.hc.vcf.gz
 ```
 
+[!NOTE] before running, double-check that the sample names in the VCF file are identical to the `@RG` read group sample names in your BAM files. Otherwise, whatshap will run but will not phase any variants.
+
 ### Running
 Run in the form of either:
 ```bash
 nextflow run main.nf -profile docker -params-file templates/params.yaml --samplesheet templates/samplesheet.csv
+```
+OR
+```bash
 pixi run nextflow run main.nf -profile docker -params-file templates/params.yaml --samplesheet templates/samplesheet.csv 
 ```
 
-`mnp-merge-nf` will output merged VCFs as compressed `vcf.gz` files.
+`mnp-merge-nf` will output merged VCFs as compressed `vcf.gz` files. Merged variants will be marked as `FILTER = MERGED`, as shown in the example below, and may be filtered out for downstream purposes.
 
+![example_merged_variants](assets/example_merged_variants.png)
+
+In this example, 3 variants are in-phase (sharing the tag `PS: 29943483`). However, only 2/3, at positions 29943483 and 29943484, are adjacent and within the same codon. Therefore, these two are merged (`FILTER = MERGED`) into a single two-nucleotide variant record at position 29943483. This new merged variant and the third unmerged variant at position 29943579 would be retained with a `FILTER = PASS` filter.
+
+If the two SNPs hadn't been merged and had been left misannotated: in this case, the codon reference sequence is ACG and encodes amino acid T/Thr. Downstream variant annotation (e.g., with VEP) would likely treat these independently as CCG (P/Pro) and AGG (R/Arg) if undetected and unfixed.
 
 ## Example data
 Scripts and instructions for how to download and work with example data from the [SEQC2 Consortium](https://sites.google.com/view/seqc2) have been included in [data/README.md](data/README.md). Briefly:
