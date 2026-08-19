@@ -21,7 +21,7 @@ bash 01-reference_download.sh
 Running VarScan2 requires an installation of [Docker](https://docs.docker.com/desktop/setup/install/linux/) (browse for suitable instructions for your system OS). Once installed, run:
 
 ```bash
-02-run_varscan.sh
+bash 02-run_varscan.sh
 ```
 
 This will create a series of variant call VCF files in the varscan2 directory. The main file of interest for downstream phasing and merging for demonstration is `WES_EA.snp.Somatic.hc.vcf` (or `WES_EA.snp.Somatic.hc.vcf.gz`), which contains high-confidence VarScan2 somatic variant calls. In real workflows, you may have additional pre- and/or post-merge filtering.
