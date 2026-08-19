@@ -44,7 +44,8 @@ sample_id,normal_bam,normal_bai,tumor_bam,tumor_bai,vcf
 WES_EA,data/WES_EA_N_1.bwa.dedup.bam,data/WES_EA_N_1.bwa.dedup.bai,data/WES_EA_T_1.bwa.dedup.bam,data/WES_EA_T_1.bwa.dedup.bai,data/varscan2/WES_EA.snp.Somatic.hc.vcf.gz
 ```
 
-[!NOTE] before running, double-check that the sample names in the VCF file are identical to the `@RG` read group sample names in your BAM files. Otherwise, whatshap will run but will not phase any variants.
+> [!NOTE] 
+> Before running, double-check that the sample names in the VCF file are identical to the `@RG` read group sample names in your BAM files. Otherwise, whatshap will run but will not phase any variants.
 
 ### Running
 Run in the form of either:
