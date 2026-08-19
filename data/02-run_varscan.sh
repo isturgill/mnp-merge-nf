@@ -10,12 +10,13 @@ NORMAL_BAM="data/WES_EA_N_1.bwa.dedup.bam"
 TUMOR_BAM="data/WES_EA_T_1.bwa.dedup.bam"
 # ----------------------------------------------------------------------------------
 # Automated naming based on above inputs
-NORMAL=$(basename ${NORMAL_BAM} .bwa.dedeup.bam)
+NORMAL=$(basename ${NORMAL_BAM} .bwa.dedup.bam)
 TUMOR=$(basename ${TUMOR_BAM} .bwa.dedup.bam)
 SAMPLE=$(basename ${NORMAL} _N_1)
 NORMAL_PILEUP="data/varscan2/${SAMPLE}.normal.pileup"
 TUMOR_PILEUP="data/varscan2/${SAMPLE}.tumor.pileup"
 SNP="data/varscan2/${SAMPLE}.snp.vcf"
+SOMATIC_HC="$(basename ${SNP} .snp.vcf).snp.Somatic.hc.vcf"
 #-----------------------------------------------------------------------------------
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
@@ -36,17 +37,16 @@ docker run --rm --user $(id -u):$(id -g) -v ..:/data -w /data ${DOCKER} \
 
 		# Run VarScan2 and output as VCF
 		java -Xmx8G -jar /opt/varscan/VarScan.jar somatic \
-			'"${NORMAL_PILEUP}"' \ 
-			'"${TUMOR_PILEUP}"' \
+			'"${NORMAL_PILEUP}"' '"${TUMOR_PILEUP}"' \
 			data/varscan2/'"${SAMPLE}"' \
 			--output-vcf
 		
 		# Split variants into somatic and germline files
-		java -Xmx8G -jar /opt/varscan/Varscan.jar processSomatic '"${SNP}"'  
+		java -Xmx8G -jar /opt/varscan/VarScan.jar processSomatic '"${SNP}"'  
 	'
 
 # This process renames the original samples as simply 'NORMAL' and 'TUMOR'.
 # This is undesirable for the next step with phasing, which cross-references
 # the VCF column names and the @RG read sample names in the BAM, so we need to reset the names.
-sed -i "s/NORMAL/${NORMAL}/g" ${SNP}
-sed -i "s/TUMOR/${TUMOR}/g" ${SNP}
+sed -i "s/NORMAL/${NORMAL}/g" varscan2/${SOMATIC_HC}
+sed -i "s/TUMOR/${TUMOR}/g" varscan2/${SOMATIC_HC}
